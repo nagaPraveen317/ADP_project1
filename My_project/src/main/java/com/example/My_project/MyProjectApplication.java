@@ -1,13 +1,13 @@
-package com.example.Phase2_project;
+package com.example.My_project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Phase2ProjectApplication {
+public class MyProjectApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Phase2ProjectApplication.class, args);
+		SpringApplication.run(MyProjectApplication.class, args);
 	}
 
 }
