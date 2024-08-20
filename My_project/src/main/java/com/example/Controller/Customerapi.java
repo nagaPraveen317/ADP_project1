@@ -12,35 +12,49 @@ import com.example.Models.Customer;
 @RequestMapping("/api")
 public class Customerapi {
 
- ArrayList<Customer> c=new ArrayList<Customer>();
+ static ArrayList<Customer> customerList;
 
-    public Customerapi(){
+    static{
+        customerList=new ArrayList<Customer>();
         Customer c1=new Customer(1L,"abc1@gmail.com","abc1","abc1");
-        Customer c2Customer=new Customer(2L,"abc2@gmail.com","abc2","abc2");
+        Customer c2=new Customer(2L,"abc2@gmail.com","abc2","abc2");
         Customer c3=new Customer(3L,"abc3@gmail.com","abc3","abc3");
         Customer c4=new Customer(4L,"abc4@gmail.com","abc4","abc4");
+        customerList.add(c1);
+        customerList.add(c2);
+        customerList.add(c3);
+        customerList.add(c4);
 
     }
+    
+    
 
     @GetMapping("/")
     public String checkingStatus(){
-       return "Service is working good";
+       return "Service is  working good";
     }
 
     @GetMapping("/customers")
     public String getAllCustomers(){
         String cust="";
-        for(Customer c1:c){
-            cust=cust+c1;
+        for(Customer c1:customerList){
+            cust=cust+c1.getcustomer();
             
         }
-        return cust;
+        return cust + "Number of customers: " + customerList.size();
     
     }
 
     @GetMapping("/customers/{id}")
     public String getCustomerById(@PathVariable Long id){
-        return "Customer with " + id + "is returned";
+        
+       for(Customer c:customerList){
+                if(c.getId()==id){
+                    return c.getcustomer();
+                }
+                
+       }
+       return "Customer doesn't exists with the given ID: " + id;
     }
 
     
