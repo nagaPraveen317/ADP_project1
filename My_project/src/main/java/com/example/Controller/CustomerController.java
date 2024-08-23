@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
+
 
 import com.example.Models.Customer;
 import com.example.Service.CustomerService;
@@ -45,6 +47,19 @@ public class CustomerController {
         return ResponseEntity.ok(c);
     
     }
+    @GetMapping("/customers/byname/{username}")
+	public ResponseEntity<?> lookupCustomerByNameGet(@PathVariable("username") String username,
+			UriComponentsBuilder uri) {
+		
+		return customerService.lookupCustomerByNameGet(username, uri);
+	}
+	
+	//lookupCustomerByName POST
+	@PostMapping("/customers/byname")
+	public ResponseEntity<?> lookupCustomerByNamePost(@RequestBody String username, UriComponentsBuilder uri) {
+		return customerService.lookupCustomerByNamePost(username, uri);
+	}	
+	
 
     @GetMapping("/customers/{id}")
     public ResponseEntity<?> getCustomerById(@PathVariable Long id){
