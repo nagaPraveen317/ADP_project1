@@ -10,8 +10,17 @@ import com.example.Models.Customer;
 @Service
 public class CustomerService {
 
-    @Autowired
+    
     private CustomerRep customerRep;
+
+    /*public CustomerService(){
+
+    }*/
+
+    @Autowired
+    public CustomerService(CustomerRep customerRep){
+        this.customerRep=customerRep;
+    }
 
     public String checkstatus(){
         return "server is working good";
