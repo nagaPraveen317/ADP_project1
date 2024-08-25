@@ -33,26 +33,11 @@ public class AuthFilter implements Filter{
 		String uri = req.getRequestURI();
 		
 		
-		// for development purposes
-		// allow turning off auth checking with header tokencheck:false
-		String tokenheader = req.getHeader("tokencheck");
-		if( tokenheader != null && !tokenheader.equalsIgnoreCase("true") ) {
-			chain.doFilter(request, response);
-			return;		
-		}
-		
-		// auth checking will not apply to these cases
-		// token endpoint
-		// user register endpoint
-		// healthcheck endpoint on '/api/'
-		if(   !uri.startsWith("/api/events") 
-	       && !uri.startsWith("/api/registrations")
-	       && !uri.equals("/api/customers")
-	       ) {
+		if(    !uri.equals("/api/customers")) {
 			chain.doFilter(request, response);
 			return;			
 		}else{
-			// check JWT token
+			
 			String authheader = req.getHeader("authorization");
 			if(authheader != null && authheader.length() > 7 && authheader.startsWith("Bearer")) {
 				String jwt_token = authheader.substring(7, authheader.length());
@@ -81,15 +66,6 @@ public class AuthFilter implements Filter{
 		ApiLogger.log("AuthFilter.destroy");	
 	}
 
-	/*
-	 * public boolean verifyToken(String token) { try {
-	 * Jwts.parser().setSigningKey(key).parseClaimsJws(token); return true; } catch
-	 * (JwtException e) { return false; } }
-	 * 
-	 * public String getScopes(String token) { try { Claims claims =
-	 * Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody(); String
-	 * scopes = claims.get("scopes", String.class); return scopes; } catch
-	 * (JwtException e) { return null; } }
-	 */	
+	
 	
 }
